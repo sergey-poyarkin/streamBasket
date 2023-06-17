@@ -1,7 +1,9 @@
 import java.io.*;
 import java.util.Arrays;
 
-public class Busket {
+public class Busket implements Serializable{
+
+    private static final long serialVersionUID = 1L;
     private String[] products;
     private int[] prices;
     private int[] numOfProducts;
@@ -73,5 +75,19 @@ public class Busket {
 
             return busket;
         }
+    }
+
+    public void saveBin(File file) throws IOException {
+        try (ObjectOutputStream objStream = new ObjectOutputStream(new FileOutputStream(file))) {
+            objStream.writeObject(this);
+        }
+    }
+
+    public static Busket loadFromBinFile(File file) throws IOException, ClassNotFoundException {
+        Busket busket = null;
+        try (ObjectInputStream objInStr = new ObjectInputStream(new FileInputStream(file))) {
+            busket = (Busket) objInStr.readObject();
+        }
+        return busket;
     }
 }

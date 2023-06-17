@@ -8,13 +8,13 @@ public class Main {
     static int[] prices = {60, 80, 40, 75}; // массив цен
     static int[] amountInBusket = new int[4]; // массив кол-ва продуктов
     //static int sumProducts = 0; // сумма корзины
-    static File saving = new File("busket.txt");
-    public static void main(String[] args) throws IOException {
+    static File saving = new File("busket.bin");
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         Busket busket = null;
 
         if (saving.exists()) {
-            busket = Busket.loadFromTxtFile(saving);
+            busket = Busket.loadFromBinFile(saving);
         } else {
             busket = new Busket(products, prices);
         }
@@ -42,7 +42,7 @@ public class Main {
             if (numOfProduct > 0 || numOfProduct <= products.length) { // запоминание кол-ва продуктов,
                 amountInBusket[numOfProduct - 1] += amountOfProduct;
                 busket.addToCart((numOfProduct - 1), amountOfProduct);
-                busket.saveTxt(saving);
+                busket.saveBin(saving);
             }
         }
     }
